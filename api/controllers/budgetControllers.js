@@ -2,6 +2,18 @@ const mongoose = require('mongoose');
 
 const Budget = require('../models/budget');
 
+const getBudget = (req, res) => {
+  Budget.find({})
+    .exec()
+    .then((budget) => {
+      res.status(200).json(budget);
+    })
+    .catch((err) => {
+      res.status(500).json({ err });
+      return;
+    });
+}
+
 const createBudget = (req, res) => {
   const { title, budgetAmount } = req.body;
   const newBudget = Budget({ title, budgetAmount });
@@ -18,5 +30,6 @@ const createBudget = (req, res) => {
 };
 
 module.exports = {
-  createBudget
+  createBudget,
+  getBudget
 };
